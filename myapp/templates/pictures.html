@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ sitename }}
+{% endblock %}
+
+{% block content %}
+
+{% if pictures.count() == 0 %}
+	<div class="shadow p-3 mb-5 bg-body rounded">
+		{% if current_user.is_authenticated %}
+		You have not uploaded any pictures yet!
+		<br/>
+		upload some pictures now.
+		{% else %}
+		No pictures have been uploaded yet.
+		<br/>
+		Please login and upload a picture now!
+		{% endif %}
+	</div>
+{% endif %}
+
+
+
+{% for picture in pictures %}
+
+	<div class="shadow p-3 mb-5 bg-body rounded text-center">
+		<a href="{{url_for('picstuff.viewpic', id=picture.id)}}">
+		<div class="modal-body">
+		<img class="imgsmall" src="{{ url_for('static', filename='uploads/' + picture.folder + '/' + picture.name) }}">
+		</div>
+		</a>
+
+		{{ picture.desc }}<br/>
+		{{picture.user.name}}<br/>
+		{{picture.date_added}}<br/>
+	</div>
+
+{% endfor %}
+
+	{% if current_user.is_authenticated %}
+		<div class="floating-container" title="Add Item">
+			<a href="{{ url_for('picstuff.picupload')}}">
+				<div class="floating-button">+</div>
+			</a>
+		</div>
+	{% endif %}
+{% endblock %}

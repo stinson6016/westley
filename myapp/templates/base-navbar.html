@@ -1,0 +1,41 @@
+<nav class="navbar top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('mainstuff.main') }}">
+          <i class="bi bi-camera navico-plane" title="{{ sitename }}"></i>
+          {{ sitename }}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+          {% if current_user.is_authenticated %}
+          
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('userspages.userprofile')}}">Profile</a>
+          </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('userspages.signup')}}">Signup!</a>
+          </li>
+          {% endif %}
+        </ul>
+      
+        {% if current_user.is_authenticated %}
+        <div style="color: whitesmoke">
+          <a class="nav-link" href="{{ url_for('userspages.logout')}}" title="{{current_user.name}}">
+              Logout
+          </a>
+        </div>
+        {% else %}
+        <div style="color: whitesmoke"> 
+          <a class="nav-link" href="{{ url_for('userspages.login')}}">
+              Login
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>

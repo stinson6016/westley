@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+	{{ picture.desc }}
+	<br/>
+	{{ picture.date_added }}
+	<br/>
+	<br/>
+
+	<a href="{{url_for('static', filename='uploads/' + picture.folder + '/' + picture.name)}}">
+	<div class="modal-body">
+	<img class="imglg" src="{{ url_for('static', filename='uploads/' + picture.folder + '/' + picture.name) }}">
+	</div>
+	</a>
+
+	<br/>
+	<br/>
+
+	<div  class="d-none d-lg-block">
+		<table class="table">
+			<tr>
+				<td class="text-start">
+					<a href="{{ url_for('mainstuff.main', _anchor=picture.id)}}">
+						<button type="button" class="btn btn-secondary" title="Back">Back</button>
+					</a>
+				</td>
+				<td class="text-center">
+					<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+						Delete
+					</button>
+				</td>
+				<td class="text-end">
+					<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#renameModal">
+						Rename
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div  class="d-lg-none">
+		<table class="table">
+			
+			<tr>
+				<td class="text-start">
+					<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#renameModal">
+						Rename
+					</button>
+					<br/>
+					<br/>
+					<a href="{{ url_for('mainstuff.main')}}">
+						<button type="button" class="btn btn-secondary" title="Back">Back</button>
+					</a>
+
+				</td>
+				
+				<td class="text-end">
+					<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+						Delete
+					</button>
+				</td>
+				
+			</tr>
+			<tr>
+				
+			</tr>
+		</table>
+	</div>
+
+</div>
+
+
+{% endblock %}
