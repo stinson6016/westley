@@ -6,17 +6,25 @@ import pathlib
 import os
 
 from . import db
-from .extras import new_id, UPLOAD_FOLDER
+from .extras import new_id, UPLOAD_FOLDER, delpicture
 from .models import Pictures, Settings, Users
-from .webforms import PictureUploadForm
+from .webforms import PictureUploadForm, PictureUpdateForm
 
 picstuff = Blueprint("picstuff", __name__)
 
-@picstuff.route('/<uuid:id>')
+@picstuff.route('/<uuid:id>', methods=['GET','POST'])
 def viewpic(id):
     picture = Pictures.query.get_or_404(id)
+    form = PictureUpdateForm()
+    if request.method == 'POST':
+        picture.desc = form.desc.data
+        db.session.add(picture)
+        db.session.commit()
+    form.desc.default = picture.desc
+    form.process() 
     return render_template("picture.html",
-                           picture=picture)
+                           picture=picture,
+                           form=form)
 
 @picstuff.route('/add', methods=['GET','POST'])
 @login_required
@@ -40,3 +48,11 @@ def picupload():
         return redirect(url_for("mainstuff.main",  _anchor=new_item.id))
     return render_template("pictureupload.html",
                            form=form)
+
+@picstuff.route('/deletepic/<uuid:id>')
+@login_required
+def deletepic(id):
+    pic_to_delete = Pictures.query.get_or_404(id)
+    delpicture(pic_to_delete)
+    return redirect(url_for("mainstuff.main"))
+    

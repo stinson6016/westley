@@ -11,7 +11,7 @@ def new_id():
     return uuid.uuid4()
 
 def delpicture(picture):
-    os.remove(os.path.join(UPLOAD_FOLDER, current_user.id, picture.picture))
+    os.remove(os.path.join(UPLOAD_FOLDER, picture.folder, picture.name))
     db.session.delete(picture)
     db.session.commit()
     return True

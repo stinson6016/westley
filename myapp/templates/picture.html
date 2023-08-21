@@ -7,16 +7,15 @@
 {% block content %}
 
 <div class="shadow p-3 mb-5 bg-body rounded">
-	{{ picture.desc }}
-	<br/>
-	{{ picture.date_added }}
-	<br/>
-	<br/>
 
 	<div class="modal-body">
 		<img class="imglg" src="{{ url_for('static', filename='uploads/' + picture.folder + '/' + picture.name) }}">
 	</div>
-
+	{{ picture.desc }}
+	<br/>
+	{{ picture.user.name }}
+	<br/>
+	{{ picture.date_added }}
 	<br/>
 	<br/>
 	{% if current_user.is_authenticated %}
@@ -78,5 +77,50 @@
 
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm Delete</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		  Delete this Entry?
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+		  <a href="{{  url_for('picstuff.deletepic', id=picture.id) }}"> 
+		  	<button type="button" class="btn btn-danger">Delete</button>
+		  </a>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="renameModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="renameModalLabel">Update Description</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<form method="POST">
+			{{ form.hidden_tag() }}
+			<div class="modal-body">
+				{{ form.desc.label(class="form-label") }}
+				{{ form.desc(class="form-control", autofocus=true) }}
+			</div>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			{{ form.submit(class="btn btn-success") }}
+			</div>
+		</form>
+	  </div>
+	</div>
+  </div>
 
 {% endblock %}
