@@ -4,7 +4,8 @@ import os
 
 from . import db
 
-UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
+UPLOAD_FOLDER = 'myapp/static/uploads/'
+# UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
 
 def new_id():
     return uuid.uuid4()
