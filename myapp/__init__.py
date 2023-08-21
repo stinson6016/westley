@@ -43,6 +43,7 @@ def create_app():
         settings = Settings.query.first()
         SITENAME = settings.sitename if settings else "Untitled"
         SIGNUP = settings.signup if settings else "y"
+        print (SIGNUP)
         # SITENAME = "Westley"
         return dict(myenv=MYENV, sitename=SITENAME, signup=SIGNUP)
     

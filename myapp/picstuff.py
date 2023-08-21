@@ -13,7 +13,6 @@ from .webforms import PictureUploadForm
 picstuff = Blueprint("picstuff", __name__)
 
 @picstuff.route('/<uuid:id>')
-@login_required
 def viewpic(id):
     picture = Pictures.query.get_or_404(id)
     return render_template("picture.html",

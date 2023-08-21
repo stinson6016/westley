@@ -13,15 +13,13 @@
 	<br/>
 	<br/>
 
-	<a href="{{url_for('static', filename='uploads/' + picture.folder + '/' + picture.name)}}">
 	<div class="modal-body">
-	<img class="imglg" src="{{ url_for('static', filename='uploads/' + picture.folder + '/' + picture.name) }}">
+		<img class="imglg" src="{{ url_for('static', filename='uploads/' + picture.folder + '/' + picture.name) }}">
 	</div>
-	</a>
 
 	<br/>
 	<br/>
-
+	{% if current_user.is_authenticated %}
 	<div  class="d-none d-lg-block">
 		<table class="table">
 			<tr>
@@ -72,6 +70,11 @@
 			</tr>
 		</table>
 	</div>
+	{% else %}
+	<a href="{{ url_for('mainstuff.main', _anchor=picture.id)}}">
+		<button type="button" class="btn btn-secondary" title="Back">Back</button>
+	</a>
+	{% endif %}
 
 </div>
 
